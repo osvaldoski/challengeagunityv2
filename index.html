@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="./population.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div>
+            <h1>Population</h1>
+            <div class="population-div">
+                <div class="populationCategory">
+                    <span id="menPopulation" class="totalPopulation"></span>Men
+                    <div class="borderBox">
+                        <p>By country</p>
+                        <div class="countryBox" id="boxMen"></div>
+                    </div>
+                </div>
+                <div class="populationCategory">
+                    <span id="womenPopulation" class="totalPopulation"></span>Women
+                    <div class="borderBox">
+                        <p>By country</p>
+                        <div class="countryBox" id="boxWomen"></div>
+                    </div>
+                </div>
+                <div class="populationCategory">
+                    <span id="youthPopulation" class="totalPopulation"></span>Youth
+                    <div class="borderBox">
+                        <p>By country</p>
+                        <div class="countryBox" id="boxYouth"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        let totalMen = 0;
+        let totalWomen = 0;
+        let totalYouth = 0;
+        function getTotalPopulation() {
+            console.log(population)
+            Array.from(population.countries).forEach(country => {
+                console.log(country)
+                totalMen = totalMen + country.menPopulation
+                totalWomen = totalWomen + country.womenPopulation
+                totalYouth = totalYouth + country.youthPopulation
+            });
+            totalMen = Math.round(totalMen * 10) / 10
+            totalWomen = Math.round(totalWomen * 10) / 10
+            totalYouth = Math.round(totalYouth * 10) / 10
+        }
+
+        function setTotalValues() {
+            document.getElementById("menPopulation").innerHTML = `${totalMen}M ` || 0
+            document.getElementById("womenPopulation").innerHTML = `${totalWomen}M ` || 0
+            document.getElementById("youthPopulation").innerHTML = `${totalYouth}M ` || 0
+        }
+
+        function displayCountryItem(name, population, idBox, classesDiv, classesSpan) {
+            let div = document.createElement("div");
+            let spanNumber = document.createElement("span");
+            let spanName = document.createElement("span");
+            let box = document.getElementById(idBox)
+
+            div.setAttribute("class", classesDiv)
+            spanNumber.setAttribute("class", classesSpan)
+
+            spanNumber.innerHTML = population
+            spanName.innerHTML = " " + name
+            div.appendChild(spanNumber)
+            div.appendChild(spanName)
+
+            box.appendChild(div)
+        }
+        function displayCountryBoxes() {
+
+            Array.from(population.countries).forEach(country => {
+                displayCountryItem(country.name, country.menPopulation, "boxMen", "countryItem countryMen", "countryNumber numberMen")
+                displayCountryItem(country.name, country.womenPopulation, "boxWomen", "countryItem countryWomen", "countryNumber numberWomen")
+                displayCountryItem(country.name, country.youthPopulation, "boxYouth", "countryItem countryYouth", "countryNumber numberYouth")
+            });
+
+        }
+        getTotalPopulation()
+        setTotalValues()
+        displayCountryBoxes()
+    </script>
+
+</body>
+
+</html>
